@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background: rgb(7,16,54);
+            background: linear-gradient(37deg, rgba(7,16,54,1) 0%, rgba(3,29,142,1) 53%, rgba(14,0,65,1) 100%);
+            background-attachment: fixed;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #registrationForm {
+            width: 400px;
+            margin: 20vh auto 0 auto;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 0 30px;
+            padding: 30px;
+            backdrop-filter: blur(50px) brightness(100%);
+            height: 650px;
+            display: none;
+        }
+        #signInForm{
+          
+            width: 400px;
+            margin: 20vh auto 0 auto;
+            background-color: rgba(255, 255, 255, 0.4);
+            border-radius: 0 30px;
+            padding: 30px;
+            backdrop-filter: blur(50px) brightness(100%);
+            height: 500px;
+            display: none;
+
+        }
+        #signInForm{
+            margin-bottom: 1800px;
+        }
+
+        h1 {
+            text-align: center;
+            color: lightcyan;
+        }
+
+        #registrationForm button, #signInForm button {
+            border: 1px solid #792099;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 20px 0;
+            cursor: pointer;
+            font-size: 20px;
+            width: 100%;
+        }
+
+        .input-field {
+            position: relative;
+            margin: 30px 0;
+            border-bottom: 2px solid lightblue;
+        }
+input{
+    background: transparent;
+}
+        .input-field label {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: #fff;
+            pointer-events: none;
+            transition: 0.5s;
+        }
+
+        .input-field input {
+            width: 97.5%;
+            height: 40px;
+            font-size: 16px;
+            color: #fff;
+            padding: 0 5px;
+            background: transparent;
+            border: none;
+            outline: none;
+        }
+
+        .input-field input:focus ~ label,
+        .input-field input:valid ~ label {
+            top: -10px;
+            left: 5px;
+            font-size: 12px;
+            color: lightblue;
+        }
+
+        .input-field.success {
+            border-bottom: 4px solid #0cc477;
+        }
+
+        .input-field .errorMessage {
+            color: rgb(242, 18, 18);
+            font-size: 16px;
+            margin-top: 5px;
+        }
+
+        .input-field.error {
+            border-bottom: 2px solid rgb(206, 67, 67);
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            transform: scale(0.8);
+        }
+
+        button {
+            background: rgb(0,57,108);
+            background: linear-gradient(37deg, rgba(0,57,108,1) 0%, rgba(3,169,255,1) 46%, rgba(4,84,167,1) 76%);
+            font-weight: bold;
+            color: rgb(255, 137, 12);
+        }
+
+        button:hover {
+            background: rgb(0,57,108);
+            background: linear-gradient(37deg, rgba(0,57,108,1) 0%, rgba(3,110,255,1) 46%, rgba(31,4,167,1) 76%);
+            transform: scale(0.9);
+            box-shadow: 3px 3px 10px blueviolet;
+            color: white;
+        }
+
+        button:active {
+            background: rgb(62,13,178);
+            background: linear-gradient(37deg, rgba(62,13,178,1) 0%, rgba(3,69,142,1) 46%, rgba(57,19,119,1) 100%);
+            color: rgb(111, 248, 111);
+            font-weight: bolder;
+            box-shadow: 3px 3px 10px greenyellow;
+        }
+
+        .agree {
+            align-content: center;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            cursor: pointer;
+            color: #fff;
+        }
+        .me {
+            color: #fff;
+        }
+        p {
+            color: #fff;
+            font-weight: bolder;
+            margin-left: 180px;
+        }
+        a {
+            text-decoration: none;
+        }
+        .fadeIn {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.fadeOut {
+    animation: fadeOut 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+    </style>
+    <title>Sign Up</title>
+</head>
+<body>
+    <div class="container">
+        <form action="" id="registrationForm" >
+            <h1>Create New Account</h1>
+            <div class="input-field">
+                <input type="text" id="user" name="user" required>
+                <label for="user">Username</label>
+                <div class="errorMessage"></div>
+            </div>
+            <div class="input-field">
+                <input type="email" id="emailAddress" name="emailAddress" required>
+                <label for="emailAddress">Email</label>
+                <div class="errorMessage"></div>
+            </div>
+            <div class="input-field">
+                <input type="password" id="pass" name="pass" required>
+                <label for="pass">Password</label>
+                <span class="toggle-password" onclick="togglePasswordVisibility('pass')">Show</span>
+                <div class="errorMessage"></div>
+            </div>
+            <div class="input-field">
+                <input type="password" id="confirmPass" name="confirmPass" required>
+                <label for="confirmPass">Confirm Password</label>
+                <span class="toggle-password" onclick="togglePasswordVisibility('confirmPass')">Show</span>
+                <div class="errorMessage"></div>
+            </div>
+            <label class="me"><input type="checkbox" id="me" required> I agree to the terms and conditions</label>
+            <button type="submit">Sign Up</button>
+            <p> OR </p>
+            <button type="button" id="switchToSignIn">Sign In</button>
+        </form>
+    </div>
+    <div class="container">
+        <form action="" id="signInForm">
+            <h1>Sign In</h1>
+            <div class="input-field">
+                <input type="email" id="signInEmail" name="signInEmail" required>
+                <label for="signInEmail">Email</label>
+                <div class="errorMessage"></div>
+            </div>
+            <div class="input-field">
+                <input type="password" id="signInPass" name="signInPass" required>
+                <label for="signInPass">Password</label>
+                <span class="toggle-password" onclick="togglePasswordVisibility('signInPass')">Show</span>
+                <div class="errorMessage"></div>
+            </div>
+            <label class="me"><input type="checkbox" id="rememberMe"> Remember Me</label>
+            <button type="submit">Sign In</button>
+            <p> OR </p>
+            <button type="button" id="switchToSignUp">Sign Up</button>
+        </form>
+    </div>
+<script>
+ document.addEventListener('DOMContentLoaded', () => {
+    const registrationForm = document.querySelector('#registrationForm');
+    const signInForm = document.querySelector('#signInForm');
+
+    document.getElementById('switchToSignIn').addEventListener('click', () => {
+        signInForm.style.display = 'block';
+        registrationForm.style.display = 'none';
+        signInForm.classList.add('fadeIn');
+        registrationForm.classList.add('fadeOut');
+        setTimeout(() => {
+            registrationForm.classList.remove('fadeOut');
+        }, 500);
+    });
+
+    document.getElementById('switchToSignUp').addEventListener('click', () => {
+        registrationForm.style.display = 'block';
+        signInForm.style.display = 'none';
+        registrationForm.classList.add('fadeIn');
+        signInForm.classList.add('fadeOut');
+        setTimeout(() => {
+            signInForm.classList.remove('fadeOut');
+        }, 500);
+    });
+
+    registrationForm.style.display = 'block';
+    signInForm.style.display = 'none';
+
+    const user = document.querySelector('#user');
+    const emailAddress = document.querySelector('#emailAddress');
+    const pass = document.querySelector('#pass');
+    const confirmPass = document.querySelector('#confirmPass');
+    const signInEmail = document.querySelector('#signInEmail');
+    const signInPass = document.querySelector('#signInPass');
+
+    registrationForm.addEventListener('submit', (e) => {
+        if (!checkInputs(registrationForm)) {
+            e.preventDefault();
+        } else {
+            alert('Account created successfully!');
+        }
+    });
+
+    signInForm.addEventListener('submit', (e) => {
+        if (!checkInputs(signInForm)) {
+            e.preventDefault();
+        } else {
+            alert('Sign in successfully! Welcome Back');
+        }
+    });
+
+    const togglePasswordVisibility = (fieldId) => {
+        const field = document.getElementById(fieldId);
+        field.type = field.type === 'password' ? 'text' : 'password';
+    };
+
+    const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+    togglePasswordButtons.forEach((toggle) => {
+        toggle.addEventListener('click', function () {
+            const inputField = this.previousElementSibling.previousElementSibling;
+            togglePasswordVisibility(inputField.id);
+            this.textContent = inputField.type === 'password' ? 'Show' : 'Hide';
+        });
+    });
+
+    const checkInputs = (form) => {
+        const userVal = form === registrationForm ? user.value.trim() : signInEmail.value.trim();
+        const emailAddressVal = emailAddress.value.trim();
+        const passVal = form === registrationForm ? pass.value.trim() : signInPass.value.trim();
+        const confirmPassVal = confirmPass ? confirmPass.value.trim() : '';
+
+        let success = true;
+
+        const showError = (element, message) => {
+            const inputField = element.parentElement;
+            const errorMessage = inputField.querySelector('.errorMessage');
+
+            errorMessage.innerText = message;
+            inputField.classList.add('error');
+            inputField.classList.remove('success');
+            success = false;
+        };
+
+        const showSuccess = (element) => {
+            const inputField = element.parentElement;
+            const errorMessage = inputField.querySelector('.errorMessage');
+
+            errorMessage.innerText = '';
+            inputField.classList.add('success');
+            inputField.classList.remove('error');
+        };
+
+        if (userVal === '') {
+            showError(user, 'Username is required');
+        } else {
+            showSuccess(user);
+        }
+
+        if (emailAddressVal === '') {
+            showError(emailAddress, 'Email is required');
+        } else if (!isValidEmail(emailAddressVal)) {
+            showError(emailAddress, 'Please enter a valid email');
+        } else {
+            showSuccess(emailAddress);
+        }
+
+        if (passVal === '') {
+            showError(pass, 'Password is required');
+        } else if (passVal.length < 8) {
+            showError(pass, 'Password must be at least 8 characters long');
+        } else {
+            showSuccess(pass);
+        }
+
+        if (form === registrationForm) {
+            if (confirmPassVal === '') {
+                showError(confirmPass, 'Confirm password is required');
+            } else if (confirmPassVal !== passVal) {
+                showError(confirmPass, 'Passwords do not match');
+            } else {
+                showSuccess(confirmPass);
+            }
+        }
+
+        return success;
+    };
+
+    const isValidEmail = (email) => {
+        return String(email)
+            .toLowerCase()
+            .match(
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+            );
+    };
+});
+
+
+</script>
+</body>
+</html>
+
