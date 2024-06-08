@@ -1,8 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
@@ -241,6 +241,7 @@ input{
         </form>
     </div>
 <script>
+ 
  document.addEventListener('DOMContentLoaded', () => {
     const registrationForm = document.querySelector('#registrationForm');
     const signInForm = document.querySelector('#signInForm');
@@ -276,7 +277,7 @@ input{
     const signInPass = document.querySelector('#signInPass');
 
     registrationForm.addEventListener('submit', (e) => {
-        if (!checkInputs(registrationForm)) {
+        if (!checkRegistrationInputs()) {
             e.preventDefault();
         } else {
             alert('Account created successfully!');
@@ -284,7 +285,7 @@ input{
     });
 
     signInForm.addEventListener('submit', (e) => {
-        if (!checkInputs(signInForm)) {
+        if (!checkSignInInputs()) {
             e.preventDefault();
         } else {
             alert('Sign in successfully! Welcome Back');
@@ -305,11 +306,11 @@ input{
         });
     });
 
-    const checkInputs = (form) => {
-        const userVal = form === registrationForm ? user.value.trim() : signInEmail.value.trim();
+    const checkRegistrationInputs = () => {
+        const userVal = user.value.trim();
         const emailAddressVal = emailAddress.value.trim();
-        const passVal = form === registrationForm ? pass.value.trim() : signInPass.value.trim();
-        const confirmPassVal = confirmPass ? confirmPass.value.trim() : '';
+        const passVal = pass.value.trim();
+        const confirmPassVal = confirmPass.value.trim();
 
         let success = true;
 
@@ -354,14 +355,56 @@ input{
             showSuccess(pass);
         }
 
-        if (form === registrationForm) {
-            if (confirmPassVal === '') {
-                showError(confirmPass, 'Confirm password is required');
-            } else if (confirmPassVal !== passVal) {
-                showError(confirmPass, 'Passwords do not match');
-            } else {
-                showSuccess(confirmPass);
-            }
+        if (confirmPassVal === '') {
+            showError(confirmPass, 'Confirm password is required');
+        } else if (confirmPassVal !== passVal) {
+            showError(confirmPass, 'Passwords do not match');
+        } else {
+            showSuccess(confirmPass);
+        }
+
+        return success;
+    };
+
+    const checkSignInInputs = () => {
+        const emailAddressVal = signInEmail.value.trim();
+        const passVal = signInPass.value.trim();
+
+        let success = true;
+
+        const showError = (element, message) => {
+            const inputField = element.parentElement;
+            const errorMessage = inputField.querySelector('.errorMessage');
+
+            errorMessage.innerText = message;
+            inputField.classList.add('error');
+            inputField.classList.remove('success');
+            success = false;
+        };
+
+        const showSuccess = (element) => {
+            const inputField = element.parentElement;
+            const errorMessage = inputField.querySelector('.errorMessage');
+
+            errorMessage.innerText = '';
+            inputField.classList.add('success');
+            inputField.classList.remove('error');
+        };
+
+        if (emailAddressVal === '') {
+            showError(signInEmail, 'Email is required');
+        } else if (!isValidEmail(emailAddressVal)) {
+            showError(signInEmail, 'Please enter a valid email');
+        } else {
+            showSuccess(signInEmail);
+        }
+
+        if (passVal === '') {
+            showError(signInPass, 'Password is required');
+        } else if (passVal.length < 8) {
+            showError(signInPass, 'Password must be at least 8 characters long');
+        } else {
+            showSuccess(signInPass);
         }
 
         return success;
